@@ -25,3 +25,58 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+# Setup
+Use the Angular CLI to generate a new library skeleton in a new workspace with the following commands.
+```
+ng new my-workspace --no-create-application
+cd my-workspace
+ng generate library my-lib
+```
+
+Build, test, and lint the project with CLI commands
+```
+ng build my-lib --configuration development
+ng test my-lib
+ng lint my-lib
+```
+
+Publishing your library
+```
+ng build my-lib
+cd dist/my-lib
+npm publish
+```
+```
+npm login
+```
+
+Use library
+```
+ng generate application my-app
+```
+```
+npm install my-lib
+```
+If you’re using a local version of your library, install it like this
+```
+npm install ../dist/my-lib
+```
+```
+import { Component } from '@angular/core';
+import { MyLibComponent } from 'my-lib'; // Adjust this if using a local version
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [MyLibComponent], // Import the standalone component
+  template: `
+    <h1>My Application</h1>
+    <lib-my-lib message="This is a success message!" type="success"></lib-my-lib>
+  `,
+})
+export class AppComponent {}
+```
+```
+ng serve
+```
